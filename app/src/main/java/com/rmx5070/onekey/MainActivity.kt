@@ -74,8 +74,15 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withLink
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
@@ -283,20 +290,46 @@ class MainActivity : ComponentActivity() {
                     Tab.HOME -> LargeTopAppBar(
                         title = {
                             val collapse = homeScroll.state.collapsedFraction
+                            val faded = (1f - collapse).coerceIn(0f, 1f)
+                            val muted = MaterialTheme.colorScheme.onSurfaceVariant
+                            val link = MaterialTheme.colorScheme.primary
                             Column(
-                                // The subtitle still occupies layout space when
-                                // faded out; nudge the block down so the title
-                                // sits centred in the collapsed bar like a
-                                // regular TopAppBar title.
-                                Modifier.offset(y = 8.dp * collapse),
+                                // The subtitle and byline still occupy layout
+                                // space when faded out; nudge the block down so
+                                // the title sits centred in the collapsed bar
+                                // like a regular TopAppBar title.
+                                Modifier.offset(y = 16.dp * collapse),
                             ) {
                                 Text("Liberate-P3", fontWeight = FontWeight.SemiBold)
                                 Text(
                                     "One-click jailbreak for Realme P3",
                                     fontSize = 12.sp,
                                     lineHeight = 16.sp,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    modifier = Modifier.alpha((1f - collapse).coerceIn(0f, 1f)),
+                                    color = muted,
+                                    modifier = Modifier.alpha(faded),
+                                )
+                                Text(
+                                    buildAnnotatedString {
+                                        withStyle(SpanStyle(color = muted)) {
+                                            append("by archixman. ")
+                                        }
+                                        withLink(
+                                            LinkAnnotation.Url(
+                                                url = SOURCE_URL,
+                                                styles = TextLinkStyles(
+                                                    style = SpanStyle(
+                                                        color = link,
+                                                        textDecoration = TextDecoration.Underline,
+                                                    ),
+                                                ),
+                                            )
+                                        ) {
+                                            append("Source code")
+                                        }
+                                    },
+                                    fontSize = 12.sp,
+                                    lineHeight = 16.sp,
+                                    modifier = Modifier.alpha(faded),
                                 )
                             }
                         },
@@ -900,5 +933,6 @@ class MainActivity : ComponentActivity() {
 
     companion object {
         private const val REQ_SHIZUKU = 1001
+        private const val SOURCE_URL = "https://github.com/archixman/Liberate-P3"
     }
 }
