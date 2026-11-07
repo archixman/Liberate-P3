@@ -77,11 +77,12 @@ Requires JDK 17+, Android SDK (platform 37 / build-tools 37.0.0).
 
 ```bash
 ./build.sh                     # -> app/build/outputs/apk/debug/app-debug.apk
-./build.sh assembleRelease     # needs keystore.properties first
+./build.sh assembleRelease     # -> app/build/outputs/apk/release/app-release-unsigned.apk
 ```
 
-Signing: copy `keystore.properties.example` to `keystore.properties` and fill in
-the path and passwords.
+The release build is unsigned unless `keystore.properties` is present. To sign
+it, copy `keystore.properties.example` to `keystore.properties` and fill in the
+path and passwords; the same command then produces a signed APK.
 
 ## Bundled assets and reproducible builds
 
