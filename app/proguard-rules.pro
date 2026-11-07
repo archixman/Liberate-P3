@@ -1,0 +1,5 @@
+-keep class moe.shizuku.** { *; }
+-keep class rikka.shizuku.** { *; }
+-keep class com.rmx5070.onekey.** { *; }
+-dontwarn moe.shizuku.**
+-dontwarn rikka.shizuku.**

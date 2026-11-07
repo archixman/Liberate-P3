@@ -1,0 +1,19 @@
+# Repo-local SDK path; machine specific, never commit.
+local.properties
+
+# Gradle / Kotlin
+.gradle/
+.kotlin/
+build/
+app/build/
+
+# Signing
+keystore.properties
+keystore/
+*.jks
+*.keystore
+
+# IDE / OS
+.idea/
+*.iml
+.DS_Store
