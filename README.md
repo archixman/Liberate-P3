@@ -2,19 +2,7 @@
 
 A Shizuku-based one-click jailbreak app **only for the Realme P3 (RMX5070 / RE608,
 kernel `6.1.157-android14-11-o-g00d81d97d759`)**. It runs the full exploit chain on
-the phone and late-loads KernelSU through rootd, matching the hand-validated flow:
-
-```bash
-t98260 --slide-probe
-setsid t98260 --auto --slide 0x...                    # SELinux + cred, parks rootd
-rootdclient -c "ksud late-load --kmi android14-6.1 \
-  --allow-shell --package-name me.weishu.kernelsu"
-su -c "id"                                            # verify uid=0
-```
-
-`--auto` is the exploit's canonical full chain: it runs the SELinux stage itself
-and refuses to enter the credential stage unless SELinux became permissive, so
-the app does not run a separate `--selinux-only` step.
+the phone and late-loads KernelSU through rootd.
 
 > ⚠️ For personal device research only. The kernel constants are tied to one
 > image; **a different kernel or model means wrong addresses are written**. The
@@ -80,10 +68,6 @@ Requires JDK 17+, Android SDK (platform 37 / build-tools 37.0.0).
 ./build.sh assembleRelease     # -> app/build/outputs/apk/release/app-release-unsigned.apk
 ```
 
-The release build is unsigned unless `keystore.properties` is present. To sign
-it, copy `keystore.properties.example` to `keystore.properties` and fill in the
-path and passwords; the same command then produces a signed APK.
-
 ## Bundled assets and reproducible builds
 
 `app/src/main/assets/rmx5070/`:
@@ -141,10 +125,3 @@ contains `prebuilt/kernelsu/` if you also want to refresh those two files.)
         ├── Privileged.kt             # Shizuku process wrapper
         └── HistoryStore.kt           # local run logs
 ```
-
-## License
-
-The app code is MIT (see `LICENSE`). The vendored exploit sources under
-`exploit/` and `tools/rootdclient.c` are MIT, copyright the
-`PHY110-JailBreak` contributors (see `exploit/LICENSE`). The bundled KernelSU
-(`ksud`, manager APK) is GPL-2.0, copyright its authors.
