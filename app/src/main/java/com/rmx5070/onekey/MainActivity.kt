@@ -294,20 +294,12 @@ class MainActivity : ComponentActivity() {
                             val muted = MaterialTheme.colorScheme.onSurfaceVariant
                             val link = MaterialTheme.colorScheme.primary
                             Column(
-                                // The subtitle and byline still occupy layout
-                                // space when faded out; nudge the block down so
-                                // the title sits centred in the collapsed bar
-                                // like a regular TopAppBar title.
-                                Modifier.offset(y = 16.dp * collapse),
+                                // The tagline still occupies layout space when
+                                // faded out; nudge the block down so the title
+                                // and byline sit centred in the collapsed bar.
+                                Modifier.offset(y = 8.dp * collapse),
                             ) {
                                 Text("Liberate-P3", fontWeight = FontWeight.SemiBold)
-                                Text(
-                                    "One-click jailbreak for Realme P3",
-                                    fontSize = 12.sp,
-                                    lineHeight = 16.sp,
-                                    color = muted,
-                                    modifier = Modifier.alpha(faded),
-                                )
                                 Text(
                                     buildAnnotatedString {
                                         withStyle(SpanStyle(color = muted)) {
@@ -329,6 +321,12 @@ class MainActivity : ComponentActivity() {
                                     },
                                     fontSize = 12.sp,
                                     lineHeight = 16.sp,
+                                )
+                                Text(
+                                    "One-click jailbreak for Realme P3",
+                                    fontSize = 12.sp,
+                                    lineHeight = 16.sp,
+                                    color = muted,
                                     modifier = Modifier.alpha(faded),
                                 )
                             }

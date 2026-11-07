@@ -17,3 +17,7 @@ keystore/
 .idea/
 *.iml
 .DS_Store
+
+# Signed release artifacts kept at the repo root (source repo only)
+/*.apk
+/*.idsig
